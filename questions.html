@@ -970,7 +970,7 @@
         if (courseId) {
           window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
         } else {
-          window.location.href = "./courses-list-page.html";
+          window.location.href = "./index.html";
         }
       });
     }
@@ -1030,7 +1030,7 @@
       if (courseId) {
         window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
       } else {
-        window.location.href = "./courses-list-page.html";
+        window.location.href = "./index.html";
       }
     }, 2600);
   }
@@ -1040,7 +1040,7 @@
 
     if (!courseId) {
       alert("لم يتم تحديد الدورة بشكل صحيح.");
-      window.location.href = "./courses-list-page.html";
+      window.location.href = "./index.html";
       return;
     }
 
@@ -1054,7 +1054,7 @@
         const course = courses.find(c => c.id === courseId);
         if (!course) {
           alert("لم يتم العثور على هذه الدورة.");
-          window.location.href = "./courses-list-page.html";
+          window.location.href = "./index.html";
           return;
         }
 
@@ -1111,7 +1111,7 @@
       .catch(err => {
         console.error("Error loading courses.json:", err);
         alert("تعذر تحميل بيانات الأسئلة.");
-        window.location.href = "./courses-list-page.html";
+        window.location.href = "./index.html";
       });
   }
 
