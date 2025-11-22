@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- <link rel="icon" type="image/jpeg" href="./img/logo.jpg"> -->
+  <link rel="icon" type="image/jpeg" href="./img/logo.jpg?v=2">
+
+  <title>الجمعية القرآنية الشيخ عبد الرحمان الحفيان بجامع الرحمة حي التضامن</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #00695c;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      background-image: url('img/header-background2.png');
+      background-size: contain;
+      background-repeat: repeat-x;
+      background-position: center;
+    }
+
+    .header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+    }
+
+    .header p {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .main {
+      max-width: 700px;
+      width: 100%;
+      margin: -30px auto 0;
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      flex: 1 0 auto;
+      min-height: 200px;
+      height: auto;
+    }
+
+    .main h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      color: #00695c;
+    }
+
+    .course-card {
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .course-card:hover {
+      background-color: #e0f2f1;
+      transform: scale(0.98);
+    }
+
+    .course-card:active {
+      transform: scale(0.95);
+      background-color: #c8e6c9;
+    }
+
+    .course-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #004d40;
+    }
+
+    .course-info {
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: 0.25rem;
+      line-height: 1.5;
+    }
+
+    .footer {
+      flex-shrink: 0;
+      background: #004d40;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      margin: 60px 0 0 0;
+    }
+
+    .footer a {
+      display: inline-block;
+      margin: 0.5rem;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      background: #00695c;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .footer a:hover {
+      background: #00bfa5;
+    }
+
+    @media (max-width: 480px) {
+      .main {
+        padding: 1rem;
+        margin-top: -20px;
+      }
+      .course-title {
+        font-size: 1rem;
+      }
+      .course-info {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 433px) {
+      .footer a {
+        margin: 0.3rem;
+        width: 145px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <img src="img/logo.jpg" alt="شعار الجمعية" />
+    <h1>الجمعية القرآنية الشيخ عبد الرحمان الحفيان بجامع الرحمة حي التضامن</h1>
+    <p>مرحبًا بكم في موقعنا</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <h2>تعلم معنا عن بعد</h2>
+
+    <!-- Courses will be injected here -->
+    <div id="courses-container">
+      <!-- سيتم تحميل الدورات من ملف JSON -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    📍 العنوان: جامع الرحمة، حي التضامن طريق بنزرت، أريانة، تونس<br /><br />
+    ☎️ الهاتف: 97621011 (216+)<br /><br />
+
+    <a href="https://www.facebook.com/profile.php?id=100072531663524" target="_blank">
+      <i class="fab fa-facebook"></i> صفحتنا على الفيسبوك
+    </a>
+
+    <a href="https://maps.app.goo.gl/wmVFfRn2djpAVcRC8" target="_blank">
+      <i class="fas fa-map-marker-alt"></i> موقعنا على الخريطة
+    </a>
+  </div>
+
+  <script>
+    const COURSES_JSON_URL = 'courses.json';
+
+    function selectCourse(id) {
+      const params = new URLSearchParams();
+      params.set('course', id);
+      window.location.href = './roadmap.html?' + params.toString();
+    }
+
+    function renderCourses(courses) {
+      const container = document.getElementById('courses-container');
+      container.innerHTML = '';
+
+      if (!courses || courses.length === 0) {
+        container.innerHTML = '<p style="text-align:center;">لا توجد دورات متاحة حاليًا.</p>';
+        return;
+      }
+
+      courses.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        card.addEventListener('click', () => selectCourse(course.id));
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'course-title';
+        titleEl.textContent = course.title;
+
+        const infoEl = document.createElement('div');
+        infoEl.className = 'course-info';
+
+        if (Array.isArray(course.shortInfo) && course.shortInfo.length > 0) {
+          infoEl.innerHTML = course.shortInfo.map(line => `- ${line}`).join('<br />');
+        }
+
+        card.appendChild(titleEl);
+        card.appendChild(infoEl);
+        container.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch(COURSES_JSON_URL)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('HTTP error ' + response.status);
+          }
+          return response.json();
+        })
+        .then(data => {
+          renderCourses(data.courses || []);
+        })
+        .catch(err => {
+          console.error('Error loading courses.json:', err);
+          const container = document.getElementById('courses-container');
+          container.innerHTML = '<p style="text-align:center;color:#c00;">تعذر تحميل الدورات حاليًا. الرجاء المحاولة لاحقًا.</p>';
+        });
+    });
+  </script>
+
+</body>
+</html>

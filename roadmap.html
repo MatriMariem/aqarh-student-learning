@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/jpeg" href="./img/logo.jpg?v=2">
+  <title>خريطة الدورة</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #e8f5e9;
+      color: #004d40;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #00695c;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .header p {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #d0f0e7;
+    }
+
+    .back-btn {
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    .header-container {
+      position: relative;
+      padding-top: 2.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .roadmap-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      gap: 3rem;
+      position: relative;
+    }
+
+    .section {
+      position: relative;
+      text-align: center;
+    }
+
+    .section:nth-child(odd) .circle-wrapper {
+      margin-right: 40px;
+    }
+
+    .section:nth-child(even) .circle-wrapper {
+      margin-left: 40px;
+    }
+
+    .circle-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      background-color: #26a69a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      transition: transform 0.2s ease;
+    }
+
+    .circle:hover {
+      background-color: #2bbbad;
+      transform: scale(1.05);
+    }
+
+    .circle:active {
+      transform: scale(0.9);
+      background-color: #1e8e77;
+    }
+
+    .circle.completed {
+      box-shadow: 0 0 0 3px #65fb81;
+    }
+
+    .section-title {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      text-align: center;
+      width: 120px;
+      white-space: nowrap;
+      overflow: visible;
+    }
+
+    .expand-box {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 80px;
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 1000;
+      max-width: 300px;
+    }
+
+    .expand-box::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 10px 10px 10px;
+      border-style: solid;
+      border-color: transparent transparent #ccc transparent;
+    }
+
+    .expand-box::after {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 9px 9px 9px;
+      border-style: solid;
+      border-color: transparent transparent white transparent;
+    }
+
+    .expand-box button {
+      background-color: #00695c;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s ease;
+    }
+
+    .expand-box button:hover {
+      background-color: #004d40;
+    }
+
+    .expand-box button:disabled,
+    .expand-box button[disabled] {
+      background-color: #b0bec5;
+      color: #eeeeee;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
+    .expand-box button:disabled:hover,
+    .expand-box button[disabled]:hover {
+      background-color: #b0bec5;
+    }
+
+    .exercise-all {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #00796b;
+      color: white;
+      padding: 1rem 1.2rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+      z-index: 500;
+    }
+
+    .exercise-all:hover {
+      background-color: #004d40;
+      transform: scale(1.05);
+    }
+
+    .exercise-all:active {
+      transform: scale(0.9);
+      background-color: #00332d;
+    }
+
+    @media (max-width: 480px) {
+      .header h2 {
+        font-size: 1.2rem;
+      }
+      .header p {
+        font-size: 0.9rem;
+        padding: 0 1rem;
+      }
+      .circle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+      .section-title {
+        font-size: 0.9rem;
+        width: 90px;
+      }
+      .expand-box {
+        max-width: 260px;
+        top: 70px;
+      }
+      .exercise-all {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+        bottom: 15px;
+        left: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header header-container">
+    <div class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i></div>
+    <h2 id="course-roadmap-title">خريطة دورة التجويد</h2>
+    <p id="course-roadmap-description">مقدمة شاملة لتجويد القرآن الكريم – أساسيات حتى التمييز بين الورش وقالون</p>
+  </div>
+
+  <!-- Roadmap Body -->
+  <div class="roadmap-container" onclick="closeAllPopups(event)">
+    <!-- Sections will be injected directly here -->
+  </div>
+
+  <!-- Random Exercise Button -->
+  <div class="exercise-all" onclick="startRandomExercise()">
+    <i class="fas fa-dumbbell"></i> تمرّن
+  </div>
+
+  <script>
+    const COURSES_JSON_URL = 'courses.json';
+    const PROGRESS_KEY = 'tajweed_course_progress_v1';
+
+    // نحتاجه لزر "تمّرَن"
+    let currentCourse = null;
+
+    function goBack() {
+      window.location.href = './courses-list-page.html';
+    }
+
+    function getProgress() {
+      try {
+        const raw = localStorage.getItem(PROGRESS_KEY);
+        if (!raw) return {};
+        return JSON.parse(raw);
+      } catch (e) {
+        console.warn('Error reading progress from localStorage', e);
+        return {};
+      }
+    }
+
+    function isSectionCompleted(courseId, sectionId) {
+      const progress = getProgress();
+      // ✅ considered completed only if we stored true for this section
+      return !!(progress[courseId] && progress[courseId][sectionId] === true);
+    }
+
+    function toggleExpand(wrapper) {
+      const box = wrapper.parentElement.querySelector('.expand-box');
+      const isOpen = box.style.display === 'flex';
+
+      document.querySelectorAll('.expand-box').forEach(div => {
+        div.style.display = 'none';
+      });
+
+      if (!isOpen) {
+        box.style.display = 'flex';
+      }
+    }
+
+    function closeAllPopups(event) {
+      if (!event.target.closest('.circle-wrapper')) {
+        document.querySelectorAll('.expand-box').forEach(div => {
+          div.style.display = 'none';
+        });
+      }
+    }
+
+    // "تمّرَن" = 10 أسئلة عشوائية من كل أقسام الدورة
+    function startRandomExercise() {
+      if (!currentCourse || !Array.isArray(currentCourse.roadmap)) {
+        alert('لا توجد بيانات للتمارين بعد.');
+        return;
+      }
+
+      // اجمع جميع الأسئلة الواقعية من كل الأقسام
+      let totalQuestions = 0;
+      currentCourse.roadmap.forEach(section => {
+        if (Array.isArray(section.questions)) {
+          totalQuestions += section.questions.length;
+        }
+      });
+
+      if (totalQuestions === 0) {
+        alert('لا توجد تمارين متاحة حاليًا في هذه الدورة.');
+        return;
+      }
+
+      const url =
+        './questions.html?course=' +
+        encodeURIComponent(currentCourse.id) +
+        '&mode=random&q=0';
+
+      window.location.href = url;
+    }
+
+    function renderRoadmap(course) {
+      currentCourse = course; // تخزين الدورة لزر "تمّرَن"
+
+      const titleEl = document.getElementById('course-roadmap-title');
+      const descEl = document.getElementById('course-roadmap-description');
+      const sectionsContainer = document.querySelector('.roadmap-container');
+
+      titleEl.textContent = course.roadmapTitle || ('خريطة: ' + course.title);
+      descEl.textContent = course.roadmapDescription || '';
+
+      const roadmap = course.roadmap || [];
+      sectionsContainer.innerHTML = '';
+
+      if (roadmap.length === 0) {
+        sectionsContainer.innerHTML = '<p>لا يوجد مخطط متاح لهذه الدورة حاليًا.</p>';
+        return;
+      }
+
+      roadmap.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'section';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'circle-wrapper';
+
+        const circle = document.createElement('div');
+        circle.className = 'circle';
+        circle.textContent = section.icon || '⭐';
+
+        if (isSectionCompleted(course.id, section.id)) {
+          circle.classList.add('completed');
+        }
+
+        const title = document.createElement('div');
+        title.className = 'section-title';
+        title.textContent = section.title;
+
+        wrapper.appendChild(circle);
+        wrapper.appendChild(title);
+
+        const expandBox = document.createElement('div');
+        expandBox.className = 'expand-box';
+
+        // زر الدرس
+        const lessonBtn = document.createElement('button');
+        lessonBtn.textContent = '📖 الدرس';
+
+        const hasLesson = section.hasLesson === true;
+        if (!hasLesson) {
+          lessonBtn.disabled = true;
+          lessonBtn.title = 'الدرس غير متوفر بعد';
+        } else {
+          lessonBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            alert('فتح الدرس: ' + section.title);
+            // ❌ لا نضع علامة مكتملة هنا
+          });
+        }
+
+        // زر التمارين (للقسم فقط)
+        const exerciseBtn = document.createElement('button');
+        exerciseBtn.textContent = '🧠 التمارين';
+
+        const hasQuestions =
+          Array.isArray(section.questions) && section.questions.length > 0;
+
+        if (!hasQuestions) {
+          exerciseBtn.disabled = true;
+          exerciseBtn.title = 'التمارين غير متوفرة بعد';
+        } else {
+          exerciseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            const url =
+              './questions.html?course=' +
+              encodeURIComponent(course.id) +
+              '&section=' +
+              encodeURIComponent(section.id) +
+              '&q=0';
+
+            window.location.href = url;
+          });
+        }
+
+        expandBox.appendChild(lessonBtn);
+        expandBox.appendChild(exerciseBtn);
+
+        wrapper.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleExpand(wrapper);
+        });
+
+        sectionDiv.appendChild(wrapper);
+        sectionDiv.appendChild(expandBox);
+        sectionsContainer.appendChild(sectionDiv);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get('course');
+
+      if (!courseId) {
+        alert('لم يتم تحديد دورة. سيتم إعادتك إلى قائمة الدورات.');
+        goBack();
+        return;
+      }
+
+      fetch(COURSES_JSON_URL)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('HTTP error ' + response.status);
+          }
+          return response.json();
+        })
+        .then(data => {
+          const courses = data.courses || [];
+          const course = courses.find(c => c.id === courseId);
+
+          if (!course) {
+            alert('لم يتم العثور على هذه الدورة. سيتم إعادتك إلى القائمة.');
+            goBack();
+            return;
+          }
+
+          renderRoadmap(course);
+        })
+        .catch(err => {
+          console.error('Error loading courses.json:', err);
+          alert('تعذر تحميل بيانات الدورة.');
+          goBack();
+        });
+    });
+  </script>
+
+</body>
+</html>

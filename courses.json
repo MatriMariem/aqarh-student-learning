@@ -1,0 +1,285 @@
+{
+  "courses": [
+    {
+      "id": "asasyet-alqiraah",
+      "title": "دورة أساسيات القراءة في القرآن",
+      "shortInfo": [
+        "أصول رواية قالون",
+        "مخارج وصفات الحروف",
+        "الوقف والابتداء"
+      ],
+      "roadmapTitle": "أساسيات القراءة في القرآن",
+      "roadmapDescription": "أصول رواية قالون - مخارج وصفات الحروف - الوقف والابتداء",
+      "roadmap": [
+        {
+          "id": "murajaah",
+          "icon": "⭐",
+          "title": "مراجعة",
+          "hasLesson": false,
+          "questions": [
+            {
+              "text": "ماهو أوجه البسملة بين السورتين عند الإمام قالون؟",
+              "options": [
+                {
+                  "text": "إثبات البسملة",
+                  "correct": true
+                },
+                {
+                  "text": "حذف البسملة",
+                  "correct": false
+                },
+                {
+                  "text": "كل ما ذُكِر",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "text": "ماهو مقدار المد المنفصل عند الإمام عيسى بن مينا قالون؟",
+              "options": [
+                {
+                  "text": "القصر",
+                  "correct": true
+                },
+                {
+                  "text": "التوسط",
+                  "correct": true
+                },
+                {
+                  "text": "الطويل",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "text": "ماهو مقدار المد المتصل عند الإمام عيسى بن مينا قالون؟",
+              "options": [
+                {
+                  "text": "القصر",
+                  "correct": false
+                },
+                {
+                  "text": "التوسط",
+                  "correct": true
+                },
+                {
+                  "text": "الطويل",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "text": "اختر الكلمات التي فيها مد متصل:",
+              "options": [
+                {
+                  "text": "السماء",
+                  "correct": true
+                },
+                {
+                  "text": "أرأيتم",
+                  "correct": false
+                },
+                {
+                  "text": "إنا أنزلنا",
+                  "correct": false
+                },
+                {
+                  "text": "من بعد",
+                  "correct": false
+                },
+                {
+                  "text": "آمنا به",
+                  "correct": false
+                },
+                {
+                  "text": "جاء أجله",
+                  "correct": true
+                },
+                {
+                  "text": "ءامن",
+                  "correct": false
+                },
+                {
+                  "text": "المؤمنين",
+                  "correct": false
+                },
+                {
+                  "text": "العالمين",
+                  "correct": false
+                },
+                {
+                  "text": "يأيها",
+                  "correct": false
+                },
+                {
+                  "text": "النبيئين",
+                  "correct": true
+                },
+                {
+                  "text": "على الأرائك",
+                  "correct": true
+                }
+              ]
+            },
+            {
+              "text": "اختر الكلمات التي فيها مد منفصل:",
+              "options": [
+                {
+                  "text": "السماء",
+                  "correct": false
+                },
+                {
+                  "text": "أرأيتم",
+                  "correct": false
+                },
+                {
+                  "text": "إنا أنزلنا",
+                  "correct": true
+                },
+                {
+                  "text": "من بعد",
+                  "correct": false
+                },
+                {
+                  "text": "آمنا به",
+                  "correct": false
+                },
+                {
+                  "text": "جاء أجله",
+                  "correct": false
+                },
+                {
+                  "text": "ءامن",
+                  "correct": false
+                },
+                {
+                  "text": "المؤمنين",
+                  "correct": false
+                },
+                {
+                  "text": "العالمين",
+                  "correct": false
+                },
+                {
+                  "text": "يأيها",
+                  "correct": true
+                },
+                {
+                  "text": "النبيئين",
+                  "correct": false
+                },
+                {
+                  "text": "على الأرائك",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warch",
+      "title": "دورة قراءة نافع براوييه قالون وورش",
+      "shortInfo": [
+        "أصول رواية ورش",
+        "مقارنة بين رواية قالون وورش"
+      ],
+      "roadmapTitle": "قراءة نافع براوييه قالون وورش",
+      "roadmapDescription": "أصول رواية ورش - مقارنة بين رواية قالون وورش",
+      "roadmap": [
+        {
+          "id": "murajaah",
+          "icon": "⭐",
+          "title": "مراجعة",
+          "hasLesson": false,
+          "questions": [
+            {
+              "text": "ماهو أوجه البسملة بين السورتين عند الإمام قالون؟",
+              "options": [
+                { "text": "إثبات البسملة", "correct": true },
+                { "text": "حذف البسملة", "correct": false },
+                { "text": "كل ما ذُكِر", "correct": false }
+              ]
+            },
+            {
+              "text": "ماهو مقدار المد المنفصل عند الإمام عيسى بن مينا قالون؟",
+              "options": [
+                { "text": "القصر", "correct": true },
+                { "text": "التوسط", "correct": true },
+                { "text": "الطويل", "correct": false }
+              ]
+            },
+            {
+              "text": "ماهو مقدار المد المتصل عند الإمام عيسى بن مينا قالون؟",
+              "options": [
+                { "text": "القصر", "correct": false },
+                { "text": "التوسط", "correct": true },
+                { "text": "الطويل", "correct": false }
+              ]
+            },
+            {
+              "text": "ماهو مقدار المد المنفصل عند الإمام ورش؟",
+              "options": [
+                { "text": "القصر", "correct": false },
+                { "text": "التوسط", "correct": false },
+                { "text": "الطويل", "correct": true }
+              ]
+            },
+            {
+              "text": "ماهو مقدار المد المتصل عند الإمام ورش؟",
+              "options": [
+                { "text": "القصر", "correct": false },
+                { "text": "التوسط", "correct": false },
+                { "text": "الطويل", "correct": true }
+              ]
+            },
+            {
+              "text": "ما الأصل في هاء الجموع والتثنية والمفرد: الكسر أم الضم؟",
+              "options": [
+                { "text": "الكسر", "correct": false },
+                { "text": "الضم", "correct": true }
+              ]
+            },
+            {
+              "text": "اختر الكلمات التي فيها مد متصل:",
+              "options": [
+                { "text": "السماء", "correct": true },
+                { "text": "أرأيتم", "correct": false },
+                { "text": "إنا أنزلنا", "correct": false },
+                { "text": "من بعد", "correct": false },
+                { "text": "آمنا به", "correct": false },
+                { "text": "جاء أجله", "correct": true },
+                { "text": "ءامن", "correct": false },
+                { "text": "المؤمنين", "correct": false },
+                { "text": "العالمين", "correct": false },
+                { "text": "يأيها", "correct": false },
+                { "text": "النبيئين", "correct": true },
+                { "text": "على الأرائك", "correct": true }
+              ]
+            },
+            {
+              "text": "اختر الكلمات التي فيها مد منفصل:",
+              "options": [
+                { "text": "السماء", "correct": false },
+                { "text": "أرأيتم", "correct": false },
+                { "text": "إنا أنزلنا", "correct": true },
+                { "text": "من بعد", "correct": false },
+                { "text": "آمنا به", "correct": false },
+                { "text": "جاء أجله", "correct": false },
+                { "text": "ءامن", "correct": false },
+                { "text": "المؤمنين", "correct": false },
+                { "text": "العالمين", "correct": false },
+                { "text": "يأيها", "correct": true },
+                { "text": "النبيئين", "correct": false },
+                { "text": "على الأرائك", "correct": false }
+              ]
+            }
+          ]
+        }
+        
+      ]
+    }
+  ]
+}
+

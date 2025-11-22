@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/jpeg" href="./img/logo.jpg?v=2">
+  <title>سؤال-في-التجويد</title>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #e8f5e9;
+      color: #004d40;
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+    }
+
+    /* ========== TOP BAR ========== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .score-badge {
+      white-space: nowrap;
+      font-size: 0.9rem;
+      background-color: #004d40;
+      color: #ffffff;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      min-width: 70px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .progress-wrapper {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .progress-label {
+      font-size: 0.75rem;
+      color: #00695c;
+      text-align: center;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background-color: #c8e6c9;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #26a69a, #66bb6a);
+      transition: width 0.3s ease;
+    }
+
+    .exit-btn {
+      border: none;
+      background: #ffcdd2;
+      color: #b71c1c;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 1rem;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    .exit-btn:hover {
+      background: #ef9a9a;
+      transform: scale(1.05);
+    }
+
+    .exit-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* ========== QUESTION AREA ========== */
+    .question-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .question-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .question-default-text {
+      font-size: 0.95rem;
+      color: #00796b;
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .question-audio {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .question-audio button {
+      border: none;
+      background: #00695c;
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .question-audio button:hover {
+      background: #004d40;
+    }
+
+    /* ========== OPTIONS GRID ========== */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .option-card {
+      background: #e3f2fd;
+      border-radius: 10px;
+      padding: 0.75rem 0.9rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 54px;
+      transition: transform 0.1s ease, background 0.15s ease,
+                  border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .option-card:active {
+      transform: scale(0.97);
+    }
+
+    .option-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #0d47a1;
+      word-wrap: break-word;
+    }
+
+    .option-audio {
+      font-size: 0.8rem;
+      color: #0d47a1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .option-card.selected {
+      background: #c8e6c9;
+      border-color: #2e7d32;
+    }
+
+    .option-card.correct {
+      background: #c8e6c9;
+      border-color: #2e7d32;
+    }
+
+    .option-card.wrong {
+      background: #ffebee;
+      border-color: #c62828;
+    }
+
+    .option-card.missed {
+      background: #fff3cd;
+      border-color: #ffb300;
+    }
+
+    /* ========== BOTTOM FEEDBACK BAR ========== */
+    .feedback-bar {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      background: #eceff1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      position: sticky;
+      bottom: 0.5rem;
+    }
+
+    .feedback-bar.success {
+      background: #c8e6c9;
+      border: 1px solid #2e7d32;
+    }
+
+    .feedback-bar.error {
+      background: #ffcdd2;
+      border: 1px solid #c62828;
+    }
+
+    .feedback-message {
+      font-size: 0.95rem;
+    }
+
+    .feedback-message strong {
+      font-weight: 700;
+    }
+
+    .feedback-details {
+      font-size: 0.85rem;
+      color: #004d40;
+      white-space: pre-line;
+    }
+
+    .feedback-details.error-text {
+      color: #b71c1c;
+    }
+
+    .feedback-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .primary-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.5rem 1.4rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: #00695c;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background 0.2s ease, transform 0.1s ease, opacity 0.1s ease;
+    }
+
+    .primary-btn:hover:not(:disabled) {
+      background: #004d40;
+      transform: translateY(-1px);
+    }
+
+    .primary-btn:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .primary-btn:disabled {
+      background: #b0bec5;
+      cursor: not-allowed;
+      opacity: 0.9;
+    }
+
+    /* ========== EXIT MODAL ========== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.2rem 1.2rem 1rem;
+      max-width: 340px;
+      width: 100%;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .modal-dialog h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+      color: #004d40;
+    }
+
+    .modal-dialog p {
+      margin: 0 0 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .secondary-btn,
+    .danger-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.45rem 1.4rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      transition: background 0.2s ease, transform 0.1s ease;
+      min-width: 90px;
+    }
+
+    .secondary-btn {
+      background: #eceff1;
+      color: #37474f;
+    }
+
+    .secondary-btn:hover {
+      background: #cfd8dc;
+      transform: translateY(-1px);
+    }
+
+    .secondary-btn:active {
+      transform: scale(0.97);
+    }
+
+    .danger-btn {
+      background: #e53935;
+      color: #ffffff;
+    }
+
+    .danger-btn:hover {
+      background: #c62828;
+      transform: translateY(-1px);
+    }
+
+    .danger-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* ========== FINAL RESULT OVERLAY ========== */
+    .result-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+      padding: 1rem;
+    }
+
+    .result-overlay.active {
+      display: flex;
+      animation: fadeInOverlay 0.3s ease-out;
+    }
+
+    .result-dialog {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 1.5rem 1.5rem 1.2rem;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      animation: popIn 0.4s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-score-circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: radial-gradient(circle at 30% 30%, #a5d6a7, #2e7d32);
+      position: relative;
+    }
+
+    .result-score-circle::before,
+    .result-score-circle::after {
+      content: "★";
+      position: absolute;
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      animation: floatStar 1.5s ease-in-out infinite alternate;
+    }
+
+    .result-score-circle::before {
+      top: 10px;
+      left: 18px;
+    }
+
+    .result-score-circle::after {
+      bottom: 10px;
+      right: 18px;
+      animation-delay: 0.4s;
+    }
+
+    .result-title {
+      margin: 0 0 0.3rem;
+      font-size: 1.4rem;
+      color: #004d40;
+    }
+
+    .result-subtitle {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #455a64;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeInOverlay {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes floatStar {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-6px); }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 0.75rem;
+      }
+
+      .top-bar {
+        gap: 0.5rem;
+      }
+
+      .question-card {
+        padding: 0.8rem 0.9rem;
+      }
+
+      .question-text {
+        font-size: 1rem;
+      }
+
+      .modal-dialog {
+        max-width: 300px;
+        padding: 1rem 0.9rem 0.9rem;
+      }
+
+      .result-dialog {
+        max-width: 320px;
+        padding: 1.2rem 1.1rem 1rem;
+      }
+
+      .result-score-circle {
+        width: 115px;
+        height: 115px;
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ========== TOP BAR ========== -->
+  <div class="top-bar">
+    <div class="score-badge" id="score-badge">%0</div>
+
+    <div class="progress-wrapper">
+      <div class="progress-label">
+        السؤال <span id="current-index">1</span> من <span id="total-questions">1</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <button class="exit-btn" title="الخروج">
+      <i class="fas fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- ========== QUESTION AREA ========== -->
+  <div class="question-area">
+
+    <div class="question-card">
+      <p class="question-text" id="question-text">
+        <!-- سيتم ملؤه من JSON -->
+      </p>
+
+      <p class="question-default-text" id="question-default" style="display:none;">
+        اختر الإجابات الصحيحة.
+      </p>
+
+      <div class="question-audio" id="question-audio">
+        <button type="button" id="play-question-audio">
+          <i class="fas fa-volume-up"></i>
+          استمع للسؤال
+        </button>
+        <audio id="question-audio-element"></audio>
+      </div>
+    </div>
+
+    <div class="options-grid" id="options-grid">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <div class="feedback-bar" id="feedback-bar">
+      <div class="feedback-message" id="feedback-message">
+        اختر إجابة أو أكثر، ثم اضغط "تحقق من الإجابة".
+      </div>
+      <div class="feedback-details" id="feedback-details"></div>
+
+      <div class="feedback-actions">
+        <button class="primary-btn" id="check-btn" disabled>
+          تحقق من الإجابة
+          <i class="fas fa-check"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ========== EXIT CONFIRMATION MODAL ========== -->
+<div class="modal-overlay" id="exit-modal-overlay">
+  <div class="modal-dialog" role="dialog" aria-modal="true">
+    <h3>هل تريد إنهاء التمرين؟</h3>
+    <p>لن يتم حفظ تقدمك في هذا التمرين إذا خرجت الآن.</p>
+    <div class="modal-actions">
+      <button type="button" class="secondary-btn" id="cancel-exit-btn">
+        إلغاء
+      </button>
+      <button type="button" class="danger-btn" id="confirm-exit-btn">
+        خروج
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FINAL RESULT OVERLAY ========== -->
+<div class="result-overlay" id="result-overlay">
+  <div class="result-dialog">
+    <div class="result-score-circle">
+      <span id="result-score">100%</span>
+    </div>
+    <h2 class="result-title" id="result-title">أحسنت!</h2>
+    <p class="result-subtitle" id="result-subtitle">
+      أجبت بشكل صحيح على 10 من 10 أسئلة.
+    </p>
+  </div>
+</div>
+
+<script>
+  const COURSES_JSON_URL = 'courses.json';
+  const PROGRESS_KEY = 'tajweed_course_progress_v1';
+
+  let courseId = null;
+  let sectionId = null;
+  let mode = 'section'; // 'section' or 'random'
+  let currentQuestionIndex = 0;
+  let questionsList = [];
+  let questionConfig = null;
+
+  const selectedOptionIds = new Set();
+  let hasChecked = false;
+  let correctCount = 0;
+
+  // DOM refs
+  const questionTextEl = document.getElementById("question-text");
+  const defaultTextEl = document.getElementById("question-default");
+  const questionAudioWrapper = document.getElementById("question-audio");
+  const questionAudioEl = document.getElementById("question-audio-element");
+  const playQuestionAudioBtn = document.getElementById("play-question-audio");
+  const optionsGridEl = document.getElementById("options-grid");
+  const feedbackBarEl = document.getElementById("feedback-bar");
+  const feedbackMessageEl = document.getElementById("feedback-message");
+  const feedbackDetailsEl = document.getElementById("feedback-details");
+  const checkBtnEl = document.getElementById("check-btn");
+  const scoreBadgeEl = document.getElementById("score-badge");
+  const currentIndexEl = document.getElementById("current-index");
+  const totalQuestionsEl = document.getElementById("total-questions");
+  const progressFillEl = document.getElementById("progress-fill");
+
+  const exitBtnEl = document.querySelector(".exit-btn");
+  const exitModalOverlayEl = document.getElementById("exit-modal-overlay");
+  const cancelExitBtnEl = document.getElementById("cancel-exit-btn");
+  const confirmExitBtnEl = document.getElementById("confirm-exit-btn");
+
+  const resultOverlayEl = document.getElementById("result-overlay");
+  const resultScoreEl = document.getElementById("result-score");
+  const resultTitleEl = document.getElementById("result-title");
+  const resultSubtitleEl = document.getElementById("result-subtitle");
+
+  function getProgress() {
+    try {
+      const raw = localStorage.getItem(PROGRESS_KEY);
+      if (!raw) return {};
+      return JSON.parse(raw);
+    } catch (e) {
+      console.warn('Error reading progress from localStorage', e);
+      return {};
+    }
+  }
+
+  function saveProgress(progress) {
+    try {
+      localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    } catch (e) {
+      console.warn('Error saving progress to localStorage', e);
+    }
+  }
+
+  function parseQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    courseId = params.get('course');
+    sectionId = params.get('section');
+    mode = params.get('mode') || 'section';
+    const qParam = params.get('q');
+    currentQuestionIndex = qParam ? Math.max(0, parseInt(qParam, 10) || 0) : 0;
+  }
+
+  function buildQuestionConfig(rawQuestion) {
+    if (!rawQuestion) return null;
+    const total = questionsList.length || 1;
+    const current = currentQuestionIndex + 1;
+    const scorePercent = Math.round((correctCount / total) * 100);
+
+    return {
+      id: rawQuestion.id,
+      text: rawQuestion.text || "",
+      audioUrl: rawQuestion.audioUrl || "",
+      explanation: rawQuestion.explanation || "",
+      multipleCorrect: rawQuestion.multipleCorrect !== false,
+      options: Array.isArray(rawQuestion.options) ? rawQuestion.options : [],
+      currentIndex: current,
+      totalQuestions: total,
+      scorePercent
+    };
+  }
+
+  function updateScoreBadge() {
+    const total = questionsList.length || 1;
+    const percent = Math.round((correctCount / total) * 100);
+    scoreBadgeEl.textContent = "%" + percent;
+  }
+
+  function renderQuestion() {
+    if (!questionConfig) return;
+
+    // Top bar
+    scoreBadgeEl.textContent = "%" + questionConfig.scorePercent;
+    currentIndexEl.textContent = questionConfig.currentIndex;
+    totalQuestionsEl.textContent = questionConfig.totalQuestions;
+
+    const progressRatio = questionConfig.totalQuestions > 0
+      ? (questionConfig.currentIndex / questionConfig.totalQuestions)
+      : 0;
+    progressFillEl.style.width = (progressRatio * 100) + "%";
+
+    // Question text / default / audio
+    const hasText = questionConfig.text && questionConfig.text.trim() !== "";
+    const hasAudio = questionConfig.audioUrl && questionConfig.audioUrl.trim() !== "";
+
+    if (hasText) {
+      questionTextEl.textContent = questionConfig.text;
+      questionTextEl.style.display = "block";
+    } else {
+      questionTextEl.style.display = "none";
+    }
+
+    if (!hasText && !hasAudio) {
+      defaultTextEl.style.display = "block";
+    } else {
+      defaultTextEl.style.display = "none";
+    }
+
+    if (hasAudio) {
+      questionAudioEl.src = questionConfig.audioUrl;
+      questionAudioWrapper.style.display = "flex";
+    } else {
+      questionAudioWrapper.style.display = "none";
+      questionAudioEl.removeAttribute('src');
+    }
+
+    if (playQuestionAudioBtn && questionAudioEl) {
+      playQuestionAudioBtn.onclick = () => {
+        if (questionAudioEl.paused) questionAudioEl.play();
+        else questionAudioEl.pause();
+      };
+    }
+
+    // Options
+    optionsGridEl.innerHTML = "";
+    selectedOptionIds.clear();
+    hasChecked = false;
+
+    questionConfig.options.forEach((opt) => {
+      const card = document.createElement("div");
+      card.className = "option-card";
+      card.dataset.optionId = opt.id;
+
+      const label = document.createElement("div");
+      label.className = "option-label";
+      label.textContent = opt.text || "(صوت فقط)";
+      card.appendChild(label);
+
+      if (opt.audioUrl) {
+        const audioRow = document.createElement("div");
+        audioRow.className = "option-audio";
+        audioRow.innerHTML = `<i class="fas fa-volume-up"></i> استمع`;
+        card.appendChild(audioRow);
+      }
+
+      card.addEventListener("click", () => onOptionClick(opt.id, card));
+      optionsGridEl.appendChild(card);
+    });
+
+    // Feedback bar initial state
+    feedbackBarEl.classList.remove("success", "error");
+    feedbackMessageEl.textContent = "اختر إجابة أو أكثر، ثم اضغط \"تحقق من الإجابة\".";
+    feedbackDetailsEl.textContent = "";
+    feedbackDetailsEl.classList.remove("error-text");
+    checkBtnEl.disabled = true;
+    checkBtnEl.textContent = "تحقق من الإجابة";
+    checkBtnEl.onclick = onCheckAnswer;
+  }
+
+  function onOptionClick(optionId, cardEl) {
+    if (hasChecked) return;
+
+    if (selectedOptionIds.has(optionId)) {
+      selectedOptionIds.delete(optionId);
+      cardEl.classList.remove("selected");
+    } else {
+      selectedOptionIds.add(optionId);
+      cardEl.classList.add("selected");
+    }
+
+    checkBtnEl.disabled = selectedOptionIds.size === 0;
+  }
+
+  function onCheckAnswer() {
+    if (selectedOptionIds.size === 0 || !questionConfig) return;
+
+    hasChecked = true;
+
+    const correctIds = questionConfig.options
+      .filter(o => o.correct)
+      .map(o => o.id);
+
+    const selected = Array.from(selectedOptionIds);
+    const isExactlyCorrect =
+      selected.length === correctIds.length &&
+      selected.every(id => correctIds.includes(id));
+
+    document.querySelectorAll(".option-card").forEach(card => {
+      card.classList.remove("correct", "wrong", "missed");
+    });
+
+    if (isExactlyCorrect) {
+      feedbackBarEl.classList.remove("error");
+      feedbackBarEl.classList.add("success");
+      feedbackMessageEl.innerHTML = "<strong>أحسنت! 👏</strong> إجابة صحيحة.";
+      feedbackDetailsEl.textContent = "";
+      feedbackDetailsEl.classList.remove("error-text");
+
+      correctCount++;
+      updateScoreBadge();
+    } else {
+      feedbackBarEl.classList.remove("success");
+      feedbackBarEl.classList.add("error");
+      feedbackMessageEl.innerHTML = "<strong>ليست دقيقة تمامًا.</strong> حاول أن تركز في الأحكام أكثر.";
+
+      const selectedSet = new Set(selected);
+      const correctSet = new Set(correctIds);
+
+      const wronglySelected = selected.filter(id => !correctSet.has(id));
+      const missed = correctIds.filter(id => !selectedSet.has(id));
+
+      document.querySelectorAll(".option-card").forEach(card => {
+        const id = card.dataset.optionId;
+        if (correctSet.has(id) && selectedSet.has(id)) {
+          card.classList.add("correct");
+        } else if (selectedSet.has(id) && !correctSet.has(id)) {
+          card.classList.add("wrong");
+        } else if (!selectedSet.has(id) && correctSet.has(id)) {
+          card.classList.add("missed");
+        }
+      });
+
+      let errorsInfo = "";
+      if (wronglySelected.length > 0) {
+        const wrongLabels = questionConfig.options
+          .filter(o => wronglySelected.includes(o.id))
+          .map(o => o.text)
+          .join("، ");
+        errorsInfo += `اخترت بشكل غير صحيح: ${wrongLabels}.`;
+      }
+
+      if (missed.length > 0) {
+        const missedLabels = questionConfig.options
+          .filter(o => missed.includes(o.id))
+          .map(o => o.text)
+          .join("، ");
+        errorsInfo += (errorsInfo ? "\n" : "") +
+          `وكان من المفروض اختيار: ${missedLabels}.`;
+      }
+
+      let explanationText = "";
+      if (questionConfig.explanation) {
+        explanationText = `توضيح: ${questionConfig.explanation}`;
+      }
+
+      let finalDetails = "";
+      if (errorsInfo) finalDetails += errorsInfo;
+      if (explanationText) finalDetails += (finalDetails ? "\n\n" : "") + explanationText;
+
+      feedbackDetailsEl.textContent = finalDetails;
+      feedbackDetailsEl.classList.add("error-text");
+
+      updateScoreBadge();
+    }
+
+    const isLast = currentQuestionIndex >= questionsList.length - 1;
+    checkBtnEl.textContent = isLast ? "إنهاء" : "السؤال التالي";
+    checkBtnEl.onclick = () => {
+      if (isLast) {
+        showFinalResultAndRedirect();
+      } else {
+        goToQuestion(currentQuestionIndex + 1);
+      }
+    };
+  }
+
+  function normalizeQuestions(rawQuestions) {
+    if (!Array.isArray(rawQuestions)) return [];
+
+    return rawQuestions.map((q, qi) => {
+      const options = Array.isArray(q.options) ? q.options : [];
+
+      return {
+        // auto-generate a question id
+        id: q.id || `q${qi + 1}`,
+        text: q.text || "",
+        explanation: q.explanation || "",
+        audioUrl: q.audioUrl || "",
+        // auto-generate option ids
+        options: options.map((opt, oi) => ({
+          id: opt.id || `q${qi + 1}-opt${oi + 1}`,
+          text: opt.text || "",
+          audioUrl: opt.audioUrl || "",
+          correct: !!opt.correct
+        }))
+      };
+    });
+  }
+
+  function goToQuestion(newIndex) {
+    if (!questionsList || newIndex < 0 || newIndex >= questionsList.length) return;
+    currentQuestionIndex = newIndex;
+
+    const params = new URLSearchParams(window.location.search);
+    params.set('q', String(currentQuestionIndex));
+    const newUrl = window.location.pathname + "?" + params.toString();
+    window.history.replaceState({}, "", newUrl);
+
+    questionConfig = buildQuestionConfig(questionsList[currentQuestionIndex]);
+    renderQuestion();
+  }
+
+  function openExitModal() {
+    exitModalOverlayEl.classList.add("active");
+  }
+
+  function closeExitModal() {
+    exitModalOverlayEl.classList.remove("active");
+  }
+
+  function setupExitModal() {
+    if (exitBtnEl) {
+      exitBtnEl.addEventListener("click", (e) => {
+        e.preventDefault();
+        openExitModal();
+      });
+    }
+
+    if (cancelExitBtnEl) {
+      cancelExitBtnEl.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeExitModal();
+      });
+    }
+
+    if (confirmExitBtnEl) {
+      confirmExitBtnEl.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (courseId) {
+          window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
+        } else {
+          window.location.href = "./courses-list-page.html";
+        }
+      });
+    }
+
+    if (exitModalOverlayEl) {
+      exitModalOverlayEl.addEventListener("click", (e) => {
+        if (e.target === exitModalOverlayEl) {
+          closeExitModal();
+        }
+      });
+    }
+  }
+
+  function shuffleArray(arr) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function getEncouragementText(percent) {
+    if (percent >= 90) {
+      return "ما شاء الله! ممتاز 👏🌟";
+    } else if (percent >= 70) {
+      return "أحسنت! استمرارك سيجعل قراءتك أجمل بإذن الله 📖";
+    } else if (percent >= 50) {
+      return "جيد! استمر في المحاولة وستتحسن أكثر إن شاء الله 💪";
+    } else {
+      return "لا بأس، المهم أنك تتدرب. مع الاستمرار ستتحسن بإذن الله 🤍";
+    }
+  }
+
+  function showFinalResultAndRedirect() {
+    const total = questionsList.length || 1;
+    const percent = Math.round((correctCount / total) * 100);
+
+    resultScoreEl.textContent = percent + "%";
+    resultTitleEl.textContent = getEncouragementText(percent);
+    resultSubtitleEl.textContent =
+      `أجبت بشكل صحيح على ${correctCount} من ${total} سؤال${total > 2 ? 'اً' : 'ٍ'}.`;
+
+    // ✅ لو في وضع "قسم" وحصل على 100% → نعلّم هذا القسم كمكتمل في localStorage
+    if (mode === 'section' && courseId && sectionId && percent === 100) {
+      const progress = getProgress();
+      if (!progress[courseId]) {
+        progress[courseId] = {};
+      }
+      progress[courseId][sectionId] = true; // "completed"
+      saveProgress(progress);
+    }
+
+    resultOverlayEl.classList.add("active");
+
+    setTimeout(() => {
+      if (courseId) {
+        window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
+      } else {
+        window.location.href = "./courses-list-page.html";
+      }
+    }, 2600);
+  }
+
+  function loadDataAndInit() {
+    parseQueryParams();
+
+    if (!courseId) {
+      alert("لم يتم تحديد الدورة بشكل صحيح.");
+      window.location.href = "./courses-list-page.html";
+      return;
+    }
+
+    fetch(COURSES_JSON_URL)
+      .then(response => {
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        return response.json();
+      })
+      .then(data => {
+        const courses = data.courses || [];
+        const course = courses.find(c => c.id === courseId);
+        if (!course) {
+          alert("لم يتم العثور على هذه الدورة.");
+          window.location.href = "./courses-list-page.html";
+          return;
+        }
+
+        if (mode === 'random') {
+          const allQuestions = [];
+          (course.roadmap || []).forEach(section => {
+            if (Array.isArray(section.questions)) {
+              section.questions.forEach(q => {
+                allQuestions.push(q);
+              });
+            }
+          });
+
+          if (allQuestions.length === 0) {
+            alert("لا توجد تمارين متاحة حاليًا في هذه الدورة.");
+            window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
+            return;
+          }
+
+          const shuffled = shuffleArray(allQuestions);
+          questionsList = normalizeQuestions(shuffled.slice(0, 10));
+        } else {
+          if (!sectionId) {
+            alert("لم يتم تحديد القسم بشكل صحيح.");
+            window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
+            return;
+          }
+
+          const section = (course.roadmap || []).find(s => s.id === sectionId);
+          if (!section) {
+            alert("لم يتم العثور على هذا الجزء في الدورة.");
+            window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
+            return;
+          }
+
+          questionsList = normalizeQuestions(section.questions || []);
+          if (questionsList.length === 0) {
+            alert("لا توجد تمارين متاحة لهذا الجزء حاليًا.");
+            window.location.href = "./roadmap.html?course=" + encodeURIComponent(courseId);
+            return;
+          }
+        }
+
+        if (currentQuestionIndex >= questionsList.length) {
+          currentQuestionIndex = questionsList.length - 1;
+        }
+
+        correctCount = 0;
+        updateScoreBadge();
+
+        questionConfig = buildQuestionConfig(questionsList[currentQuestionIndex]);
+        renderQuestion();
+      })
+      .catch(err => {
+        console.error("Error loading courses.json:", err);
+        alert("تعذر تحميل بيانات الأسئلة.");
+        window.location.href = "./courses-list-page.html";
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupExitModal();
+    loadDataAndInit();
+  });
+</script>
+
+</body>
+</html>
